@@ -86,17 +86,24 @@ export default function Page() {
   };
 
   return (
-    <div id="app">
-      <div id="time" className={st.running ? "run" : ""} onClick={toggle}>
+    <div id="app" className={st.running ? "running" : ""}>
+      <div id="time" className={st.running ? "run" : ""}>
         <div className="unit"><span className="num">{pad(Math.floor(t / 3600))}</span><span className="lab">hours</span></div>
         <div className="unit"><span className="num">{pad(Math.floor((t % 3600) / 60))}</span><span className="lab">min</span></div>
         <div className="unit"><span className="num">{pad(t % 60)}</span><span className="lab">sec</span></div>
       </div>
-      <div id="bar">
-        <button onClick={reset}>Reset</button>
-        <button className="go" onClick={toggle}>{st.running ? "Pause" : st.acc > 0 ? "Resume" : "Start"}</button>
-        <button onClick={fullscreen}>Fullscreen</button>
-      </div>
+
+      {st.running ? (
+        <button className="pause" onClick={toggle} aria-label="Pause">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="#fff"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+        </button>
+      ) : (
+        <div id="bar">
+          <button onClick={reset}>Reset</button>
+          <button className="go" onClick={toggle}>{st.acc > 0 ? "Resume" : "Start"}</button>
+          <button onClick={fullscreen}>Fullscreen</button>
+        </div>
+      )}
     </div>
   );
 }
